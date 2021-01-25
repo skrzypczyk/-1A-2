@@ -22,7 +22,6 @@
 				];
 
 
-
 ?>
 
 <table border="1px">
