@@ -2,6 +2,7 @@
 
 include "header.php";
 
+/*
 
 
 //$listOfStudents = array();
@@ -20,7 +21,8 @@ $listOfStudents = ["Vincent", "Alexandre-Emanuel", "Valentin", "Pierre", "Théo"
 
 echo "<pre>";
 
-//var_dump($listOfStudents);
+var_dump($listOfStudents);
+print_r($listOfStudents);
 
 echo "</pre>";
 
@@ -109,6 +111,28 @@ $student[] = 21; // Clé => 13
 
 
 print_r($student);
+
+
+
+
+$listOfStudents = ["Kyliann", "Rayane", "Vincent", "Arthur", "Akli", "Pierre"];
+
+echo "<ul>";
+
+//5 itérations valeur sera dans $student
+foreach ($listOfStudents as $student) {
+	echo "<li>". $student ."</li>";
+}
+
+echo "</ul>";
+*/
+
+$students = [ "BOURDONNAY"=>12, "BOUSTANI"=>9.5, "RAINAUD"=>12, "BLANDIN"=>13 ];
+
+
+foreach ($students as $lastname => $average) {
+	echo $lastname.":".$average."<br>";
+}
 
 
 include "footer.php";
