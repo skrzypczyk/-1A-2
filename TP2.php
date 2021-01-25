@@ -36,13 +36,35 @@
 	</thead>
 	<tbody>
 
-		<tr>
-			<td>classe 1</td>
-			<td>Simon</td>
-			<td>FIOCRE 1</td>
-			<td>22</td>
-		</tr>
-		
+
+
+
+		<?php
+
+
+		foreach ($filiere as $classe => $listOfStudents) {
+				
+			foreach ($listOfStudents as $student) {
+				//$student = ["Simon", "FIOCRE", 22]
+				echo "<tr>";
+				
+				echo "<td>".$classe."</td>";
+				echo "<td>".$student[0]."</td>";
+				echo "<td>".$student[1]."</td>";
+				echo "<td>".$student[2]."</td>";
+
+				echo "</tr>";
+			}
+
+
+		}
+
+
+
+		?>
+
+
+
 
 	</tbody>
 </table>
