@@ -11,38 +11,38 @@
 
 
 
-	<form>
+	<form method="POST" action="register.php">
 
 		<label>
 			Nom :
-			<input type="text" name="lastname">
+			<input type="text" name="lastname" required="required">
 		</label>
 
 
 		<br>
 		<label>
 			Prénom :
-			<input type="text" name="firstname">
+			<input type="text" name="firstname" required="required">
 		</label>
 
 
 		<br>
 		<label>
 			Email :
-			<input type="email" name="email">
+			<input type="email" name="email" required="required">
 		</label>
 
 		<br>
 		<label>
 			Mot de passe :
-			<input type="password" name="pwd">
+			<input type="password" name="pwd" required="required">
 		</label>
 
 
 		<br>
 		<label>
 			Confirmation :
-			<input type="password" name="pwdConfirm">
+			<input type="password" name="pwdConfirm" required="required">
 		</label>
 
 		<br>
