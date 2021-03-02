@@ -63,6 +63,13 @@ if ( count($_POST) == 5
 	}
 
 
+	//Vérifier l'unicté de l'email
+	//$listOfErrors[] =  "L'adresse email existe déjà.<br>";
+	
+
+
+
+
 	//Pwd -> 1 chiffre, 1 minuscule, 1 majuscule, min 8 caractères
 
 	if( strlen($pwd)<8
