@@ -25,9 +25,14 @@ if ( count($_POST) == 5
 	) {
 
 
+
+
 	//Nettoyage des valeurs
 	$firstname = ucwords(strtolower(trim($_POST["firstname"])));
 	$lastname = mb_strtoupper(trim($_POST["lastname"]));
+	$email = mb_strtolower(trim($_POST["email"]));
+	$pwd = $_POST["pwd"];
+	$pwdConfirm = $_POST["pwdConfirm"];
 
 
 	// prénom -> min:2 max:50
@@ -41,19 +46,39 @@ if ( count($_POST) == 5
 	// nom -> min:2 max:100
 	if( strlen($lastname)<2 || strlen($lastname)>100 ){
 
-		echo "Le Nom (".$lastname.")  doit faire entre 2 et 100 caractères<br>";
+		echo "Le nom (".$lastname.") doit faire entre 2 et 100 caractères<br>";
 
 	}
 
 
-
-
 	//Email -> format respecté
+	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+	    echo "L'adresse email n'est pas valide.<br>";
+	}
+
 
 	//Pwd -> 1 chiffre, 1 minuscule, 1 majuscule, min 8 caractères
 
+	if( strlen($pwd)<8
+		 || !preg_match("/[a-z]/", $pwd)
+		 || !preg_match("/[A-Z]/", $pwd)
+		 || !preg_match("/[0-9]/", $pwd)
+	 ){
+
+		echo "Le mot de passe doit faire plus de 8 caractères avec une minuscule, une majuscule et un chiffre<br>";
+	}
+
 
 	//pwdConfirm -> = Pwd
+
+	if($pwd != $pwdConfirm) {
+		echo "Le mot de passe de confirmation ne correspond pas<br>";
+	}
+
+
+
+	//Tout est OK si rien ne s'affiche
+
 
 }else {
 	die("Tentative de Hack");
