@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	//Factorisation !!! Eviter la redondance
 	include "header.php"; // ou require
 
@@ -25,22 +26,31 @@
 
 
 		$connection = connectDB();
-		$queryPrepared = $connection->prepare("SELECT pwd FROM mg23_users WHERE email = :email ");
 
+		//Va chercher en bdd les informations pour l'email provenant du formulaire
+		$queryPrepared = $connection->prepare("SELECT * FROM mg23_users WHERE email = :email ");
 		$queryPrepared->execute(["email"=>$email]);
 
+		//On récupère les résultats de la requête SQL
 		$result = $queryPrepared->fetch();
 
+		//Si les résultats sont vides alors l'email ne correspond à rien
 		if(empty($result)){
-			echo "NOK";
+			echo '<div style="background-color: #bf7b7b; color: white; padding: 20px;margin: 10px">Les identifiants sont incorrects</div>';
 		}else{
 
 			$pwdHash = $result["pwd"];
-
+			//Ok l'email existe mais est-ce que le mot de passe est correct
 			if( password_verify($pwd, $pwdHash)){
-				echo "OK";
+				//Tout est bon
+
+				$_SESSION["auth"] = true;
+				$_SESSION["info"] = $result;
+
+				header("Location: index.php");
 			}else{
-				echo "NOK";
+				//mot de passe incorrect
+			echo '<div style="background-color: #bf7b7b; color: white; padding: 20px;margin: 10px">Les identifiants sont incorrects</div>';
 			}
 			
 		}

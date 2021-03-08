@@ -19,10 +19,11 @@ Sinon rediriger sur le form avec les erreurs
 
 
 //Vérifier que l'on a 5 champs et qu'ils ne soient pas vides
-if ( count($_POST) == 5
+if ( count($_POST) == 6
 	 && !empty($_POST["lastname"]) 
 	 && !empty($_POST["firstname"])
 	 && !empty($_POST["email"])
+	 && !empty($_POST["captcha"])
 	 && !empty($_POST["pwd"])
 	 && !empty($_POST["pwdConfirm"])
 	) {
@@ -37,8 +38,16 @@ if ( count($_POST) == 5
 	$pwd = $_POST["pwd"];
 	$pwdConfirm = $_POST["pwdConfirm"];
 
+	$captcha = strtolower($_POST["captcha"]);
+
 
 	$listOfErrors = [];
+
+
+	if($captcha != $_SESSION["captcha"]) {
+		$listOfErrors[] =  "Le captcha ne correspond pas (c'était = ".$_SESSION["captcha"].")";
+	}
+
 
 
 	// prénom -> min:2 max:50

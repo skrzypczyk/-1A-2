@@ -72,6 +72,15 @@ session_start();
 			<input type="password" name="pwdConfirm" required="required">
 		</label>
 
+
+		<br>
+		<img src="captcha.php">
+		<br>
+		<label>
+			Captcha :
+			<input type="text" name="captcha" required="required">
+		</label>
+
 		<br>
 		<input type="submit" value="S'inscrire">
 	</form>
