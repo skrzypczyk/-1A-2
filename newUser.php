@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +11,30 @@
 <body>
 
 	<h1>S'inscrire</h1>
+	<a href="login.php">Se connecter</a>
+
+
+<?php if(isset($_SESSION["listOfErrors"])) { ?>
+
+
+
+	<div style="background-color: #bf7b7b; color: white; padding: 20px;margin: 10px">
+		<?php
+
+		foreach ($_SESSION["listOfErrors"] as $error) {
+			echo "<li>".$error;
+		}
+
+
+		unset($_SESSION["listOfErrors"]);
+		?>
+	</div>
+
+
+
+
+<?php } ?>
+
 
 
 

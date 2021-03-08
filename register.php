@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 
 require "functions.php";
 
@@ -44,7 +44,7 @@ if ( count($_POST) == 5
 	// prénom -> min:2 max:50
 	if( strlen($firstname)<2 || strlen($firstname)>50 ){
 
-		$listOfErrors[] = "Le prénom (".$firstname.") doit faire entre 2 et 50 caractères<br>";
+		$listOfErrors[] = "Le prénom (".$firstname.") doit faire entre 2 et 50 caractères";
 
 	}
 
@@ -52,19 +52,34 @@ if ( count($_POST) == 5
 	// nom -> min:2 max:100
 	if( strlen($lastname)<2 || strlen($lastname)>100 ){
 
-		$listOfErrors[] =  "Le nom (".$lastname.") doit faire entre 2 et 100 caractères<br>";
+		$listOfErrors[] =  "Le nom (".$lastname.") doit faire entre 2 et 100 caractères";
 
 	}
 
 
 	//Email -> format respecté
 	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-	    $listOfErrors[] =  "L'adresse email n'est pas valide.<br>";
+	    $listOfErrors[] =  "L'adresse email n'est pas valide.";
+	}else{
+
+		//Vérifier l'unicté de l'email
+		//$listOfErrors[] =  "L'adresse email existe déjà.<br>";
+
+		$connection = connectDB();
+
+		$queryPrepared = $connection->prepare("SELECT * FROM mg23_users WHERE email = :email ");
+
+		$queryPrepared->execute(["email"=>$email]);
+
+		$result = $queryPrepared->fetch();
+
+		if( !empty($result)){
+			$listOfErrors[] =  "L'adresse email existe déjà.";
+		}
+
 	}
 
 
-	//Vérifier l'unicté de l'email
-	//$listOfErrors[] =  "L'adresse email existe déjà.<br>";
 	
 
 
@@ -78,22 +93,22 @@ if ( count($_POST) == 5
 		 || !preg_match("/[0-9]/", $pwd)
 	 ){
 
-		$listOfErrors[] =  "Le mot de passe doit faire plus de 8 caractères avec une minuscule, une majuscule et un chiffre<br>";
+		$listOfErrors[] =  "Le mot de passe doit faire plus de 8 caractères avec une minuscule, une majuscule et un chiffre";
 	}
 
 
 	//pwdConfirm -> = Pwd
 
 	if($pwd != $pwdConfirm) {
-		$listOfErrors[] =  "Le mot de passe de confirmation ne correspond pas<br>";
+		$listOfErrors[] =  "Le mot de passe de confirmation ne correspond pas";
 	}
 
 
 
 	if( empty($listOfErrors) ) {
 
+		
 		//Je peux insérer en base l'user
-		$connection = connectDB();
 
 		//Insertion de l'utilisateur en bdd via ma connection
 
@@ -111,9 +126,15 @@ if ( count($_POST) == 5
 									"pwd"=>$pwd,
 		]);
 
+		//Rediriger l'user vers login.php
+
+		header("Location: login.php");
+		
+
 	}else{
 
-		print_r($listOfErrors);
+		header("Location: newUser.php");	
+		$_SESSION["listOfErrors"] = $listOfErrors;
 
 	}
 
